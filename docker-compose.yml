@@ -7,7 +7,7 @@ services:
     env_file: "./secrets.env"
     environment:
       BOT_NAME: "Nistkasten 3000"
-      LANGUAGE: "de"
+      LANGUAGE: "de" # de / en
       # TELEGRAM_TIMEOUT: "20" # Timeout in seconds for telegram API (increase when files are big or slow connection)
       # VIDEO_DURATION: "5" # Duration of manual recorded videos in seconds
     ports:
