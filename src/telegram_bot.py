@@ -28,11 +28,11 @@ def start():
     __application.run_polling()
 
 async def send_video(video, msg):
-    await __bot.send_video(chat_id=config.CHAT_ID, video=video, caption=msg)
+    await __bot.send_video(chat_id=config.CHAT_ID, video=video, caption=msg, read_timeout=config.CHAT_TIMEOUT, write_timeout=config.CHAT_TIMEOUT)
     log(f"Video sent: {video.name}")
 
 async def send_photo(photo, msg):
-    await __bot.send_photo(chat_id=config.CHAT_ID, photo=photo, caption=msg)
+    await __bot.send_photo(chat_id=config.CHAT_ID, photo=photo, caption=msg, read_timeout=config.CHAT_TIMEOUT, write_timeout=config.CHAT_TIMEOUT)
     log(f"Photo sent: {photo.name}")
 
 async def send_msg(msg):
