@@ -1,0 +1,17 @@
+services:
+  telegram_bot:
+    restart: unless-stopped
+    build: .
+    devices:
+      - /dev/video0:/dev/video0 # Make sure that the access to the video device is granted
+    env_file: "./secrets.env"
+    environment:
+      BOT_NAME: "Nistkasten 3000"
+      LANGUAGE: "de"
+      # TELEGRAM_TIMEOUT: "20" # Timeout in seconds for telegram API (increase when files are big or slow connection)
+      # VIDEO_DURATION: "5" # Duration of manual recorded videos in seconds
+    ports:
+      - "8081:8081" # For live streaming
+    # volumes:
+      # - ./conf/motion.conf:/app/motion.conf # Uncomment if you want to override the default motion.conf
+      # - ./media:/media # Uncomment to store videos on the host
