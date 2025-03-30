@@ -36,15 +36,24 @@ async def send_media(context):
             del send_errors[media_path]
             
     except Exception as e:
+        log_error(f"Failed to send {media_path}", e)
+        
         if media_path not in send_errors:
             send_errors[media_path] = 0
 
         if send_errors[media_path] == 0:
             await telegram_bot.send_msg(config.ERROR_MESSAGE)
+
         send_errors[media_path] += 1
-        log_error(f"Failed to send {media_type}", e)
-    finally:
-        monitor_video_locked = False
+
+        if send_errors[media_path] > 5:
+            log(f"Failed to send {media_path} several times, pause for 15 minutes", "WARNING")
+            send_errors[media_path] = 3
+            monitor_video_locked = True
+            context.job_queue.run_once(send_media, 900, data=context.job.data)
+            return
+    
+    monitor_video_locked = False
 
 async def monitor_videos(context):
     """Monitors the media directory for new videos/photos"""
