@@ -2,6 +2,8 @@ services:
   telegram_bot:
     restart: unless-stopped
     build: .
+    group_add:
+      - video
     devices:
       - /dev/video0:/dev/video0 # Make sure that the access to the video device is granted
     env_file: "./secrets.env"
